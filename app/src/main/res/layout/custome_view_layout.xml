@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:circleBtn="http://schemas.android.com/apk/res-auto">
+
+    <com.example.administrator.glidetest.view.MyCircleView
+        android:id="@+id/btn_circle_gray"
+        android:layout_gravity="center"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        circleBtn:backgroundColor="#b0adad"
+        circleBtn:textSize="30dp"
+        circleBtn:textColor="@android:color/holo_red_light" />
+</android.support.constraint.ConstraintLayout>

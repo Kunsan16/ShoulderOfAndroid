@@ -51,7 +51,6 @@ public class ViewPagerTitle extends LinearLayout {
         createTextViews(titles);
         setCurrentItem(defaultIndex);
 
-
         onPageChangeListener = new MyOnPageChangeListener(getContext(), viewPager, dynamicLine, this);
         viewPager.addOnPageChangeListener(onPageChangeListener);
     }

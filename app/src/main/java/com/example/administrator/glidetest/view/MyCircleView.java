@@ -95,8 +95,8 @@ public class MyCircleView extends View {
         Log.i("MyCircleView w h 1",mRect.width()+"  "+mRect.height());
 
 
-          drawTextView(canvas);
-
+          //drawTextView(canvas);
+        drawText(canvas);
     }
 
 
@@ -112,7 +112,27 @@ public class MyCircleView extends View {
         int textWidth = mRect.width();
         int textHeight = mRect.height();
         Log.i("MyCircleView w h",textWidth+"  "+textHeight);
+
         canvas.drawText(text, (getWidth()-textWidth) / 2, (getHeight()+textHeight) / 2, mPaint);
+    }
+
+
+    private void drawText(Canvas canvas){
+        mPaint.setColor(textColor);
+        mPaint.setTextSize(textSize);
+        mPaint.setTypeface(Typeface.DEFAULT);
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setStrokeWidth(0.1f);
+        canvas.translate(getWidth()/2,getHeight()/2);
+        //画X轴
+        canvas.drawLine(-getWidth()/2,0,getWidth()/2,0,mPaint);
+        //画y轴
+        canvas.drawLine(0,-getHeight()/2,0,getHeight()/2,mPaint);
+
+        //x：绘制文本的起始x坐标
+       //y：绘制文本的baseline在y轴方向的位置
+        canvas.drawText("Google",0,0,mPaint);
+
     }
 
     public void setText(String text) {
@@ -124,6 +144,8 @@ public class MyCircleView extends View {
         mAngle = angle;
         invalidate();
     }
+
+
 
     public String getText(){
         return text;

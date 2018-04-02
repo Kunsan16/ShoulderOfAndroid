@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //GlideTest();
         //NetWorkTest();
         //tablayoutTest();
+
         myCircleView();
     }
 
@@ -66,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         //必须要将360*1.0 / number转为float或者double，这样可以避免因为取整的问题而导致没有完全平分360度
         EachAngle = Float.parseFloat(String.valueOf(360*1.0 / number));
 
-
-
         myCircleView.setClickListener(new MyCircleView.OnClickListener() {
             @Override
             public void onClick() {
@@ -76,25 +75,48 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     timer.start();
                 }
-
-
-
             }
         });
     }
-    private CountDownTimer timer = new CountDownTimer(10000, 1000) {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        
+    }
+
+    private CountDownTimer timer = new CountDownTimer(number*1000+1000, 1000) {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            myCircleView.setText(--number + "");
-            angle += EachAngle;
-            myCircleView.setAngle(angle);
+
+                if (number==1){
+                    myCircleView.setText("时间到！");
+                }else {
+                    myCircleView.setText(--number + "");
+                }
+
+                angle += EachAngle;
+                myCircleView.setAngle(angle);
+
+
         }
 
         @Override
         public void onFinish() {
-            myCircleView.setText("时间到！");
-            myCircleView.setAngle(360);
+           // myCircleView.setAngle(360);
         }
     };
 

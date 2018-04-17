@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -50,10 +51,6 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
 
     private Disposable disposable;
 
-    List<Disposable> list=new ArrayList<>();
-    private Disposable[] disposables=new Disposable[50];
-    private int[] progress=new int[50];
-    private boolean[] flags=new boolean[50];
 
     private void addDisposable(Disposable disposable){
         if (compositeDisposable == null) {
@@ -65,8 +62,15 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
     private void removeDisposable(Disposable disposable){
         if (disposable!=null)
             compositeDisposable.remove(disposable);
+    }
 
-
+    public void removeDisposable(){
+        if (disposable!=null) {
+            removeDisposable(disposable);
+            if (!disposable.isDisposed()) {
+                disposable.dispose();
+            }
+        }
     }
 
 
@@ -81,8 +85,9 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
 
         final DownloadProgressButton button=helper.getView(R.id.btn_download);
 
+
         if (item.getState()==0){
-            Log.i(TAG,helper.getAdapterPosition()+"");
+
             button.setStartText("下载");
             button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_BEGIN);
             button.setProgress(0);
@@ -95,41 +100,39 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
             if (item.getState()==Constant.DOWNLOAD_STATE_DOWDLOADING){
                 button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_DOWNLOADING);
                 button.setProgress(item.getProgress());
-
             }if (item.getState()==Constant.DOWNLOAD_STATE_PAUSE){
                 button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_PAUSE);
                 button.setProgress(item.getProgress());
+
+            }
+            if (item.getState()==Constant.DOWNLOAD_STATE_FINISH){
+                button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_FINISH);
+                button.setProgress(100);
 
             }
         }
 
 
 
-//        if (helper.lastPosition != -1) {
-//            flags[helper.lastPosition] = false;
-//        }
-//
-//        flags[position] = true;
-//        helper.lastPosition = position;
-
         button.setStateChangeListener(new DownloadProgressButton.StateChangeListener() {
             @Override
             public void onPauseTask() {
-                isPaused=true;
+
                 button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_PAUSE);
 
                 item.setState(Constant.DOWNLOAD_STATE_PAUSE);
                 item.setProgress(button.getProgress());
-//                if (disposables[helper.getAdapterPosition()]!=null){
-//                    progress[helper.getAdapterPosition()]=button.getProgress();
-//                    disposables[helper.getAdapterPosition()].dispose();
-//                }
-
+                if (!disposable.isDisposed()){
+                    disposable.dispose();
+                }
             }
 
             @Override
             public void onFinishTask() {
+                button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_FINISH);
 
+                item.setState(Constant.DOWNLOAD_STATE_FINISH);
+                item.setProgress(100);
             }
 
             @Override
@@ -159,14 +162,14 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
                             .subscribe(new Consumer<Object>() {
                                 @Override
                                 public void accept(Object o) throws Exception {
-                                    button.setProgress(button.getProgress() + 2);
-//                                    button.setState(DownloadProgressButton.STATUS_PROGRESS_BAR_DOWNLOADING);
+                                    percent+=2;
+                                    button.setProgress(percent);
                                     item.setState(Constant.DOWNLOAD_STATE_DOWDLOADING);
                                     item.setProgress(button.getProgress());
                                 }
                             });
                     addDisposable(disposable);
-                    disposables[helper.getAdapterPosition()]=disposable;
+
 
 //                new Thread(new Runnable() {
 //                    @Override
@@ -192,12 +195,7 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
 
     }
 
-    boolean isPaused;
-
-    private void checkItemState(){
-
-    }
-
+    int percent=0;
 
      public static class ViewHolderfor extends MyViewHolder{
 

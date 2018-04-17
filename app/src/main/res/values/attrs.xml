@@ -25,4 +25,12 @@
         <attr name="borderWidth" format="dimension"/>
 
     </declare-styleable>
+
+
+    <declare-styleable name="CircleButton">
+                <attr name="backgroundColor" format="color"/>
+                <attr name="textSizeNormal" format="dimension"/>
+                <attr name="text" format="string"/>
+                <attr name="textColor" format="color"/>
+        +   </declare-styleable>
 </resources>

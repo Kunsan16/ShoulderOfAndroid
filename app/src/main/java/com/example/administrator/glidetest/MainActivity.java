@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.blankj.utilcode.util.Utils;
 import com.example.administrator.glidetest.adapter.GamesAdapter;
 import com.example.administrator.glidetest.adapter.MyAdapter;
 import com.example.administrator.glidetest.adapter.MyPagerAdapter;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
 //        dynamicLine = (DynamicLine)findViewById(R.id.line);
 
-        pager = (ViewPager) findViewById(R.id.view_pager);
+        pager = findViewById(R.id.view_pager);
         viewPagerTitle.initData(new String[]{"首页", "热门", "推荐"}, pager, 0);
 
 //        onPageChangeListener = new MyOnPageChangeListener(pager, dynamicLine);
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         this.registerReceiver(networkBroadcast, filter);
     }
 
+    GamesAdapter gameAdapter;
     private void GlideTest() {
 
         GameBean gameBean = new GameBean();
@@ -111,12 +113,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         RecyclerView recyclerView = findViewById(R.id.list);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        GamesAdapter adapter = new GamesAdapter(R.layout.item_game, null);
+        gameAdapter = new GamesAdapter(R.layout.item_game, getData());
 
-        adapter.setNewData(getData());
         //   MyAdapter adapter=new MyAdapter(getData(),this);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(gameAdapter);
 
     }
 
@@ -129,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             bean.setTv(temp + i);
             data.add(bean);
         }
-
         return data;
     }
 
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     protected void onDestroy() {
         super.onDestroy();
         // this.unregisterReceiver(networkBroadcast);
+        gameAdapter.removeDisposable();
     }
 
     @Override

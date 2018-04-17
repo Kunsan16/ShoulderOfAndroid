@@ -10,6 +10,6 @@
         android:layout_width="260dp"
         android:layout_height="260dp"
         circleBtn:backgroundColor="#b0adad"
-        circleBtn:textSize="30dp"
+        circleBtn:textSizeNormal="30dp"
         circleBtn:textColor="@android:color/holo_red_light" />
 </android.support.constraint.ConstraintLayout>

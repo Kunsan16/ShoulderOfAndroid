@@ -69,7 +69,7 @@ public class MyCircleView extends View {
         TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.CircleButton);
         backgroundColor = typedArray.getColor(R.styleable.CircleButton_backgroundColor, Color.RED);
         textColor = typedArray.getColor(R.styleable.CircleButton_textColor, Color.WHITE);
-        textSize = typedArray.getDimension(R.styleable.CircleButton_textSize, 80);
+        textSize = typedArray.getDimension(R.styleable.CircleButton_textSizeNormal, 80);
         text = typedArray.getString(R.styleable.CircleButton_text);
         if (text == null){
             text = "";

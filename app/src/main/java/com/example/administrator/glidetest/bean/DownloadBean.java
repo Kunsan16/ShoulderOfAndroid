@@ -4,13 +4,9 @@ package com.example.administrator.glidetest.bean;
  * Created by Administrator on 2018/1/27.
  */
 
-public class GameBean {
-
-    private String img;
+public class DownloadBean {
 
     private String tv;
-
-    boolean isChecked;
 
     private int state;
 
@@ -24,20 +20,12 @@ public class GameBean {
         this.progress = progress;
     }
 
-    public String getImg() {
-        return img;
-    }
-
     public int getState() {
         return state;
     }
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public String getTv() {
@@ -48,11 +36,4 @@ public class GameBean {
         this.tv = tv;
     }
 
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
 }

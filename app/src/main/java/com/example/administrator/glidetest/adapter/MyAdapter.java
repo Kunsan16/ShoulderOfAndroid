@@ -8,13 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.glidetest.MyViewHolder;
 import com.example.administrator.glidetest.R;
-import com.example.administrator.glidetest.bean.GameBean;
+import com.example.administrator.glidetest.bean.DownloadBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Administrator on 2018/3/4.
@@ -23,11 +21,11 @@ import java.util.zip.Inflater;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyBaseViewHolder> {
 
 
-    private List<GameBean> mList=new ArrayList<>();
+    private List<DownloadBean> mList=new ArrayList<>();
     Context context;
     private final static String TAG="MyAdapter";
 
-    public MyAdapter(List<GameBean> mData, Context context){
+    public MyAdapter(List<DownloadBean> mData, Context context){
         this.mList=mData;
         this.context=context;
     }

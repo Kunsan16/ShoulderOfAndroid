@@ -25,6 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".practice.HandlerTestActivity"/>
+        <activity android:name=".practice.AnimationTestActivity"/>
+
+        <service android:name=".service.MyService"
+
+            android:process=":remote"/>
+
+        <activity android:name=".practice.TouchEventActivity"/>
     </application>
 
 </manifest>

@@ -1,32 +1,16 @@
 package com.example.administrator.glidetest.adapter;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.glidetest.Constant;
 import com.example.administrator.glidetest.MyViewHolder;
 import com.example.administrator.glidetest.R;
-import com.example.administrator.glidetest.bean.GameBean;
-import com.example.administrator.glidetest.glide.GlideApp;
-import com.example.administrator.glidetest.glide.ImageLoader;
-import com.example.administrator.glidetest.model.DataManager;
+import com.example.administrator.glidetest.bean.DownloadBean;
 import com.example.administrator.glidetest.view.DownloadProgressButton;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by huanxi on 2017/12/6.
  */
 
-public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHolderfor> {
+public class DownloadAdapter extends BaseQuickAdapter<DownloadBean, DownloadAdapter.SimpleViewHolder> {
 
 
     private final static String TAG="Adapter";
@@ -74,13 +58,13 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
     }
 
 
-    public GamesAdapter(int layoutResId, @Nullable List<GameBean> data) {
+    public DownloadAdapter(int layoutResId, @Nullable List<DownloadBean> data) {
         super(layoutResId, data);
 
     }
 
     @Override
-    protected void convert(final ViewHolderfor helper, final GameBean item) {
+    protected void convert(final SimpleViewHolder helper, final DownloadBean item) {
         helper.setText(R.id.tv,item.getTv());
 
         final DownloadProgressButton button=helper.getView(R.id.btn_download);
@@ -197,14 +181,11 @@ public class GamesAdapter extends BaseQuickAdapter<GameBean, GamesAdapter.ViewHo
 
     int percent=0;
 
-     public static class ViewHolderfor extends MyViewHolder{
+     public static class SimpleViewHolder extends MyViewHolder{
 
-        // CheckBox checkBox;
-        int lastPosition;
          DownloadProgressButton button;
-         public ViewHolderfor(View view) {
+         public SimpleViewHolder(View view) {
              super(view);
-            // checkBox=getView(R.id.checkbox);
              button=getView(R.id.btn_download);
 
          }

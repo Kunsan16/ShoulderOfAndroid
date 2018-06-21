@@ -4,21 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context="com.example.administrator.glidetest.MainActivity">
 
 
-    <com.example.administrator.glidetest.view.ViewPagerTitle
-        android:id="@+id/pager_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.example.administrator.glidetest.view.ViewPagerTitle>
+<Button
+    android:id="@+id/btn_handler"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Handler"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
-    </android.support.v4.view.ViewPager>
+    <Button
+    android:id="@+id/btn_animation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Animation"/>
 
+    <Button
+        android:id="@+id/btn_ipc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AIDL"/>
+
+    <Button
+        android:id="@+id/btn_touch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="事件分发"/>
 </LinearLayout>

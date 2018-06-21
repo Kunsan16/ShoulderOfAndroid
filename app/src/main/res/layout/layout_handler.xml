@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启线程"
+        android:id="@+id/btn_handler"
+        app:layout_constraintTop_toBottomOf="@+id/text"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AsyncTask"
+        android:id="@+id/btn_async"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintStart_toEndOf="@+id/btn_handler"/>
+
+</android.support.constraint.ConstraintLayout>

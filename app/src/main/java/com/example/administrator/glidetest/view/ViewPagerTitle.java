@@ -82,6 +82,7 @@ public class ViewPagerTitle extends LinearLayout {
 
     private void createDynamicLine() {
 
+         // LayoutParams are used by views to tell their parents how they want to be laid out.
         ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dynamicLine = new DynamicLine(getContext());
         dynamicLine.setLayoutParams(params);

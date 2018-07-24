@@ -1,5 +1,6 @@
 package com.example.administrator.glidetest.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -19,15 +20,15 @@ class MyRelativeLayout(context: Context?) : RelativeLayout(context) {
 
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        LogUtils.i("事件分发测试 dispatchTouchEvent MyRelativeLayout")
+
         when(ev?.action){
             MotionEvent.ACTION_DOWN ->{
-                parent.requestDisallowInterceptTouchEvent(true)
-                LogUtils.i("事件分发测试 按下 MyRelativeLayout 1")
+               // parent.requestDisallowInterceptTouchEvent(true)
+                LogUtils.i("事件分发测试2 按下 MyRelativeLayout 1")
             }
             MotionEvent.ACTION_MOVE ->{
-                parent.requestDisallowInterceptTouchEvent(false)
-                LogUtils.i("事件分发测试 移动 MyRelativeLayout 1")
+               // parent.requestDisallowInterceptTouchEvent(false)
+                LogUtils.i("事件分发测试2 移动 MyRelativeLayout 1")
             }
 
         }
@@ -42,19 +43,20 @@ class MyRelativeLayout(context: Context?) : RelativeLayout(context) {
         return super.onInterceptTouchEvent(ev)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        LogUtils.i("事件分发测试 onTouchEvent MyRelativeLayout")
+
         when(event?.action){
             MotionEvent.ACTION_DOWN ->{
 
-                LogUtils.i("事件分发测试 按下 MyRelativeLayout")
+                LogUtils.i("事件分发测试2 按下 MyRelativeLayout")
             }
             MotionEvent.ACTION_MOVE ->{
-                LogUtils.i("事件分发测试 移动 MyRelativeLayout")
+                LogUtils.i("事件分发测试2 移动 MyRelativeLayout")
             }
 
         }
-        return true
+        return false
     }
 
 }

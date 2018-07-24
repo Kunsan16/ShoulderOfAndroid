@@ -21,7 +21,7 @@ class MyLinearlayout(context: Context?) : LinearLayout(context) {
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
 
-        LogUtils.i("事件分发测试 分发事件")
+        LogUtils.i("事件分发测试1 分发事件")
         return super.dispatchTouchEvent(ev)
     }
 
@@ -29,21 +29,21 @@ class MyLinearlayout(context: Context?) : LinearLayout(context) {
 
         when(ev?.action){
             MotionEvent.ACTION_DOWN ->{
-                LogUtils.i("事件分发测试 onInterceptTouchEvent按下")
-                return false
+                LogUtils.i("事件分发测试1 拦截按下")
+               // return false
 
             }
             MotionEvent.ACTION_MOVE ->{
-                LogUtils.i("事件分发测试 onInterceptTouchEvent移动")
-                return true
+                LogUtils.i("事件分发测试1 拦截移动")
+               // return true
             }
             MotionEvent.ACTION_UP ->{
-                LogUtils.i("事件分发测试 onInterceptTouchEvent移开")
-                return true
+                LogUtils.i("事件分发测试1 拦截移开")
+              //  return true
             }
         }
 
-        return super.onInterceptTouchEvent(ev)        //返回true   后续move、up等事件不再传递给onInterceptTouchEvent方法，直接交由onTouchEvent处理
+        return super.onInterceptTouchEvent(ev)       //返回true   后续move、up等事件不再传递给onInterceptTouchEvent方法，直接交由onTouchEvent处理
     }                      //返回false  后续down，move，up都会经过这里，并分发给下级
 
     @SuppressLint("ClickableViewAccessibility")
@@ -51,17 +51,17 @@ class MyLinearlayout(context: Context?) : LinearLayout(context) {
         super.onTouchEvent(event)
         when(event?.action){
             MotionEvent.ACTION_DOWN ->{
-                LogUtils.i("事件分发测试 MyLinearlayout按下")
+                LogUtils.i("事件分发测试1 onTouchEvent按下")
 
             }
             MotionEvent.ACTION_MOVE ->{
-                LogUtils.i("事件分发测试 MyLinearlayout移动")
+                LogUtils.i("事件分发测试1 onTouchEvent移动")
             }
             MotionEvent.ACTION_CANCEL ->{
-                LogUtils.i("事件分发测试 MyLinearlayout移开")
+                LogUtils.i("事件分发测试1 onTouchEvent移开")
             }
         }
-        return true  /*
+        return false  /*
                       onTouchEvent返回true，父ViewGroup派发过来的touch事件已被该View消费，
                       不会再向上传递给父ViewGroup；后续的touch事件都将继续传递给View
 

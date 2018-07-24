@@ -29,7 +29,9 @@ import com.example.administrator.glidetest.inter.BuyProxy;
 import com.example.administrator.glidetest.inter.Consumer;
 import com.example.administrator.glidetest.practice.AnimationTestActivity;
 import com.example.administrator.glidetest.practice.HandlerTestActivity;
+import com.example.administrator.glidetest.practice.JetPackActivity;
 import com.example.administrator.glidetest.practice.TouchEventActivity;
+import com.example.administrator.glidetest.practice.UIActivity;
 import com.example.administrator.glidetest.service.MyService;
 import com.example.administrator.glidetest.view.DynamicLine;
 import com.example.administrator.glidetest.view.ViewPagerTitle;
@@ -124,6 +126,20 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onClick(View v) {
                 TouchEventActivity.Companion.launch(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_ui).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIActivity.Companion.launch(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_jetpack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JetPackActivity.Companion.launch(MainActivity.this);
             }
         });
     }

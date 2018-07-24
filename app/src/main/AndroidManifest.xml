@@ -33,6 +33,9 @@
             android:process=":remote"/>
 
         <activity android:name=".practice.TouchEventActivity"/>
+
+        <activity android:name=".practice.UIActivity"/>
+        <activity android:name=".practice.JetPackActivity" />
     </application>
 
 </manifest>

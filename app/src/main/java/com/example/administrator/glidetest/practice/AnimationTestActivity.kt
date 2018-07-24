@@ -40,10 +40,15 @@ class AnimationTestActivity :AppCompatActivity(){
         }
 
         rotate?.setOnClickListener{
-            val rotateAni = RotateAnimation(0f,360f, RotateAnimation.RELATIVE_TO_SELF,0.2F,
-                    RotateAnimation.RELATIVE_TO_SELF,0.8F)
+            val rotateAni = RotateAnimation(0f, -180f,
+                    RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 1f);
             rotateAni.duration=2000
             image?.startAnimation(rotateAni)
+//            val rotateAnimator = ObjectAnimator.ofFloat(image,"rotationX", 0f,360f)
+//            rotateAnimator.duration = 1000
+//            rotateAnimator.start()
+//            ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotationX", -180, 0);
+//            animator.setDuration(500).start();
         }
 
         scale?.setOnClickListener{

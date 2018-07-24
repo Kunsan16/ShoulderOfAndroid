@@ -10,4 +10,7 @@ public class Constant {
     public final static int DOWNLOAD_STATE_PAUSE=2;
     public final static int DOWNLOAD_STATE_DEFAULT=3;
     public final static int DOWNLOAD_STATE_FINISH=4;
+
+
+
 }

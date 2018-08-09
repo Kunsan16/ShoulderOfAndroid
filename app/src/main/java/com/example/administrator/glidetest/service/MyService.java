@@ -17,9 +17,10 @@ public class MyService extends Service {
 
 
     private IBinder binder=new IRemoteService.Stub() {
+
         @Override
         public HelloMsg sayHello() throws RemoteException {
-            return new HelloMsg("简单返回一个消息 ");
+            return null;
         }
     };
 

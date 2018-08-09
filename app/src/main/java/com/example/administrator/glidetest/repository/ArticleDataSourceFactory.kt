@@ -24,6 +24,4 @@ class ArticleDataSourceFactory : DataSource.Factory<Int,DatasBean>(){
         postLiveData!!.postValue(dataSource)
         return dataSource
     }
-
-
 }

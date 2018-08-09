@@ -11,6 +11,7 @@
         <attr name="install_color" format="reference|color"/>
         <attr name="download_textSize" format="dimension"/>
         <attr name="border_radius" format="dimension"/>
+        <attr name="border_width" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="FlikerProgressBar">

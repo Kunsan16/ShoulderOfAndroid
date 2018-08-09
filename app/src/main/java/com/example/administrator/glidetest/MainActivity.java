@@ -27,6 +27,8 @@ import com.example.administrator.glidetest.bean.DownloadBean;
 import com.example.administrator.glidetest.inter.Buy;
 import com.example.administrator.glidetest.inter.BuyProxy;
 import com.example.administrator.glidetest.inter.Consumer;
+import com.example.administrator.glidetest.inter.ITest;
+import com.example.administrator.glidetest.inter.ITestImpl;
 import com.example.administrator.glidetest.practice.AnimationTestActivity;
 import com.example.administrator.glidetest.practice.HandlerTestActivity;
 import com.example.administrator.glidetest.practice.JetPackActivity;
@@ -142,6 +144,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 JetPackActivity.Companion.launch(MainActivity.this);
             }
         });
+
+        ITest iTest=new ITest() {
+
+            @Override
+            public void getTest() {
+
+            }
+        };
     }
 
     @Override

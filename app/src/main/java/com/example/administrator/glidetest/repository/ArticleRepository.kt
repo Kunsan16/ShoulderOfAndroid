@@ -3,9 +3,7 @@ package com.example.administrator.glidetest.repository
 import android.arch.paging.PagedList
 import android.arch.paging.RxPagedListBuilder
 import com.example.administrator.glidetest.base.BaseRepository
-import com.example.administrator.glidetest.bean.ArticleListResponse
 import com.example.administrator.glidetest.bean.DatasBean
-import com.example.administrator.glidetest.bean.WanandroidBean
 import com.example.administrator.glidetest.repository.ArticleDataSource.Companion.DEF_PAGE_SIZE
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

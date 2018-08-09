@@ -12,6 +12,7 @@ import com.example.administrator.glidetest.R
 import com.example.administrator.glidetest.bean.DatasBean
 import com.example.administrator.glidetest.glide.ImageLoader
 import kotlinx.android.synthetic.main.item_article.*
+import kotlinx.android.synthetic.main.item_article.view.*
 
 /**
  * Created by moge on 2018/7/24.
@@ -41,8 +42,11 @@ class ArticleAdapter:PagedListAdapter<DatasBean, ArticleAdapter.MyViewHolder>(Ar
 
           fun bindView(position: Int,item:DatasBean,itemClick: (View, DatasBean) -> Unit){
 
-                  itemView.findViewById<TextView>(R.id.title).text=item.title
-
+              with(item){
+                 with(itemView){
+                     art_title?.text=title
+                 }
+              }
           }
 
 

@@ -1,6 +1,5 @@
 package com.example.administrator.glidetest.practice
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -9,8 +8,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.AttributeSet
-import android.view.View
 import com.example.administrator.glidetest.R
 import com.example.administrator.glidetest.adapter.ArticleAdapter
 import com.example.administrator.glidetest.repository.ArticleDataSourceFactory
@@ -36,6 +33,7 @@ class JetPackActivity:AppCompatActivity(){
     private lateinit var viewModel:ArticleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.layout_jetpack)
@@ -46,7 +44,14 @@ class JetPackActivity:AppCompatActivity(){
     }
 
     private fun requestData() {
-        viewModel.getArticleList().observe(this, Observer { result ->
+//        viewModel.getArticleList().observe(this, Observer { result ->
+//            result?.let {
+//                mAdapter.submitList(it)
+//            }
+//        })
+
+        viewModel.fetchArticleListByRxJava().subscribe({
+            result ->
             result?.let {
                 mAdapter.submitList(it)
             }

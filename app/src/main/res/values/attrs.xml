@@ -10,8 +10,11 @@
         <attr name="loading_progress_color" format="color"/>
         <attr name="install_color" format="reference|color"/>
         <attr name="download_textSize" format="dimension"/>
+        <attr name="progress_textSize" format="dimension"/>
         <attr name="border_radius" format="dimension"/>
         <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+        <attr name="percent_show" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="FlikerProgressBar">

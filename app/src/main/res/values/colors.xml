@@ -5,5 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="orange_progress_loading">#FF4081</color>
-    <color name="white">#c6ecbb</color>
+    <color name="white">#ffffff</color>
+    <color name="yellow">#fadd1e</color>
+    <color name="green">#53c930</color>
+
 </resources>

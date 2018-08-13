@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.blankj.utilcode.util.LogUtils
+import android.widget.Toast
+
 import com.example.administrator.glidetest.R
 import com.example.administrator.glidetest.view.DownLoadButton
-import com.example.administrator.glidetest.view.DownloadProgressButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_coordinator.*
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 /**
@@ -32,46 +33,54 @@ class UIActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_coordinator)
 
-        registerButton()
+        registerButton(btn_download1)
+        registerButton(btn_download2)
+        registerButton(btn_download3)
+        registerButton(btn_download4)
     }
 
-    private fun registerButton() {
+
+
+    private val map = ConcurrentHashMap<DownLoadButton,Disposable>(4)
+
+    private fun registerButton( btn_download: DownLoadButton) {
         btn_download.setStateChangeListener(object : DownLoadButton.StateChangeListener {
-            override fun onPauseTask() {
-                dispose.dispose()
+            override fun onTaskPause() {
+
+                map[btn_download]!!.dispose()    //取出对应的dispose，暂停事件流
                 btn_download.setState(DownLoadButton.STATE_PROGRESS_PAUSE)
             }
 
-            override fun onFinishTask() {
+            override fun onTaskFinish() {
 
                 btn_download.setState(DownLoadButton.STATE_PROGRESS_FINISH)
+                Toast.makeText(this@UIActivity,"正在安装...",Toast.LENGTH_SHORT).show()
             }
 
-            override fun onLoadingTask() {
-                dispose= downloadTest()
+            override fun onTaskLoading() {
+                dispose= downloadTest(btn_download)
+                map[btn_download] = dispose   //将四个按钮各自的dispose存起来
             }
 
-            override fun onOpenGame() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun onLaunchApp() {
+
+
+
             }
 
-            override fun onError() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun onTaskError() {
+
+                Toast.makeText(this@UIActivity,"下载出错",Toast.LENGTH_SHORT).show()
+
             }
 
         })
     }
 
     lateinit var  dispose:Disposable
-    override fun onResume() {
-        super.onResume()
 
 
-    }
-
-
-    private var percent:Int =0
-    private fun downloadTest() :Disposable{
+    private fun downloadTest(btn_download: DownLoadButton) :Disposable{
         btn_download.max = 100
         return Observable.interval(0, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.computation())
@@ -80,16 +89,51 @@ class UIActivity : AppCompatActivity(){
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
 
-                    percent += 10
-
-                    btn_download.progress = percent
-                    LogUtils.i(btn_download.isIndeterminate)
-                    val a =btn_download.progress
-                    LogUtils.i("------进度--------"+a)
                     btn_download.setState(DownLoadButton.STATE_PROGRESS_DOWNLOADING)
-
+                    when(btn_download){
+                        btn_download1 -> onProgress1(btn_download)
+                        btn_download2 -> onProgress2(btn_download)
+                        btn_download3 -> onProgress3(btn_download)
+                        btn_download4 -> onProgress4(btn_download)
+                    }
 
                 }
 
+    }
+
+
+    private  var  percent1:Int =0
+    private fun onProgress1(btn_download: DownLoadButton){
+        percent1 += 10
+
+        btn_download.progress = percent1
+    }
+
+    private  var  percent2:Int =0
+    private fun onProgress2(btn_download: DownLoadButton){
+        percent2 += 10
+
+        btn_download.progress = percent2
+    }
+
+
+    private  var  percent3:Int =0
+    private fun onProgress3(btn_download: DownLoadButton){
+        percent3 += 10
+
+        btn_download.progress = percent3
+    }
+
+    private  var  percent4:Int =0
+    private fun onProgress4(btn_download: DownLoadButton){
+        percent4 += 10
+
+        btn_download.progress = percent4
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dispose.dispose()
     }
 }

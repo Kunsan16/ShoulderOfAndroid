@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.blankj.utilcode.util.LogUtils
 import com.example.administrator.glidetest.R
@@ -31,15 +32,17 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     private var mBorderRadius : Float = 0f              //边框四个角的角度
     private var mBorderWidth : Float = 0f               //边框的粗细
     private var mTextSize : Float = 0f                  //文字大小
-    private var mProgressBarColor : Int = Color.RED     //进度条颜色
+    private var mTextColor : Int = Color.BLUE           //文字颜色
+    private var mProgressColor : Int = Color.RED        //进度条颜色
+    private var mInstallColor : Int = Color.GREEN       //下载完成后背景颜色
     private var showPercent : Boolean = true            //是否显示百分比（默认显示百分比）
+    private var showBorder : Boolean = true             //是否显示边框（默认显示）
 
    companion object {
-       val STATE_PROGRESS_DEFAULT = 0
+       val STATE_PROGRESS_DEFAULT     = 0
        val STATE_PROGRESS_DOWNLOADING = 1
-       val STATE_PROGRESS_PAUSE = 2
-       val STATE_PROGRESS_FINISH = 3
-
+       val STATE_PROGRESS_PAUSE       = 2
+       val STATE_PROGRESS_FINISH      = 3
    }
 
 
@@ -57,12 +60,15 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
 
     private fun initAttrs(context: Context,attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.DownloadProgressButton)
-        mBorderRadius     = ta.getDimension(R.styleable.DownloadProgressButton_border_radius,12f)
+        mBorderRadius     = ta.getDimension(R.styleable.DownloadProgressButton_border_radius,0f)
         mBorderWidth      = ta.getDimension(R.styleable.DownloadProgressButton_border_width,6f)
         mBorderColor      = ta.getColor(R.styleable.DownloadProgressButton_border_color,Color.BLUE)
         mTextSize         = ta.getDimension(R.styleable.DownloadProgressButton_progress_textSize, 46f)
-        mProgressBarColor = ta.getColor(R.styleable.DownloadProgressButton_loading_progress_color,Color.RED)
+        mTextColor        = ta.getColor(R.styleable.DownloadProgressButton_text_color,Color.RED)
+        mProgressColor    = ta.getColor(R.styleable.DownloadProgressButton_loading_progress_color,Color.RED)
+        mInstallColor     = ta.getColor(R.styleable.DownloadProgressButton_install_color,Color.GREEN)
         showPercent       = ta.getBoolean(R.styleable.DownloadProgressButton_percent_show,true)
+        showBorder        = ta.getBoolean(R.styleable.DownloadProgressButton_border_show,true)
         ta.recycle()
     }
 
@@ -84,6 +90,29 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
         mValidHeight = height - paddingTop - paddingBottom
     }
 
+    /**
+     * 处理wrap_content
+     */
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        val mWidth = (textPaint.measureText("下载")+mBorderWidth * 2).toInt()
+        val mHeight =(textPaint.descent() +  Math.abs(textPaint.ascent())+mBorderWidth * 2).toInt()
+
+        // 当布局参数设置为wrap_content时，宽高设置为按钮内文本的宽高（加上边框mBorderWidth粗细）
+        if (layoutParams.width == ViewGroup.LayoutParams.WRAP_CONTENT && layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(mWidth, mHeight)
+        } else if (layoutParams.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(mWidth, heightSize)
+        } else if (layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(widthSize, mHeight)
+        }
+
+    }
+
     override fun onDraw(canvas: Canvas) = when(mCurrentState){
 
         STATE_PROGRESS_DEFAULT       ->     drawDefaultProgress(canvas)
@@ -101,31 +130,29 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
             if (progress == 0 && mCurrentState == STATE_PROGRESS_DEFAULT) {
                 //默认状态到开始下载
                 mCurrentState = STATE_PROGRESS_DOWNLOADING
-                mStateChangeListener.onLoadingTask()
+                mStateChangeListener.onTaskLoading()
             }else if (progress in 0..max && mCurrentState == STATE_PROGRESS_DOWNLOADING){
                 //暂停
                 mCurrentState = STATE_PROGRESS_PAUSE
-                mStateChangeListener.onPauseTask()
+                mStateChangeListener.onTaskPause()
             }else if (progress in 0..max && mCurrentState == STATE_PROGRESS_PAUSE){
                 //继续下载
                 mCurrentState = STATE_PROGRESS_DOWNLOADING
-                mStateChangeListener.onLoadingTask()
+                mStateChangeListener.onTaskLoading()
             }else if (progress == max && mCurrentState == STATE_PROGRESS_FINISH){
                 //下载完成
                 mCurrentState = STATE_PROGRESS_FINISH
-                mStateChangeListener.onFinishTask()
+                mStateChangeListener.onTaskFinish()
             }
-
-
-
-
     }
 
     /**
      * 绘制下载完成
      */
     private fun drawFinish(canvas: Canvas) {
-        drawRectFBackground(canvas,mBorderColor)
+        drawRectFBackground(canvas,mInstallColor)
+        drawProgress(canvas,mInstallColor)
+        showBorder = false
         drawProgressText(canvas,"安装")
     }
 
@@ -134,20 +161,20 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
      */
     private fun drawPause(canvas: Canvas) {
         drawRectFBackground(canvas,mBorderColor)
-        drawProgress(canvas)
+        drawProgress(canvas,mProgressColor)
         drawProgressText(canvas,"继续")
-        drawGradientText(canvas)
+        drawGradientText(canvas,"继续")
     }
 
     /**
      * 下载中的进度显示
      */
     private fun drawDownLoadingProgress(canvas: Canvas) {
-
-        drawRectFBackground(canvas,mBorderColor)
-        drawProgress(canvas)
+        showBorder = true
+        drawRectFBackground(canvas, mBorderColor)
+        drawProgress(canvas,mProgressColor)
         drawProgressText(canvas,if (showPercent)"" else "暂停")
-        drawGradientText(canvas)
+        drawGradientText(canvas,if (showPercent)"" else "暂停")
         if (progress == max){
             mCurrentState = STATE_PROGRESS_FINISH
             postInvalidateDelayed(20)
@@ -158,18 +185,19 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     /**
      * PorterDuffXfermode绘制进度条
      */
-    private fun drawProgress(canvas: Canvas?) {
+    private fun drawProgress(canvas: Canvas?,mProgressColor:Int) {
 
         mPaint.style = Paint.Style.FILL
+
         val progress = mValidWidth * (progress * 1.0f / max)
         val layer = canvas!!.saveLayer(0f,0f,progress,height.toFloat(),mPaint)
-        //  canvas.translate(paddingLeft.toFloat(),paddingTop.toFloat())
-        drawRoundRectPath(canvas)
-        mPaint.color = Color.RED
 
-        drawProgressPath(progress)  //绘制src层
+        drawRoundRectPath(canvas)
+        mPaint.color = mProgressColor
+
+        drawProgressPath(progress)  //绘制src层的path
         mPaint.xfermode = mXfermode
-        canvas.drawPath(mProgressPath,mPaint)   //绘制与dst层的重叠区域
+        canvas.drawPath(mProgressPath,mPaint)   //绘制与dst层的重叠区域，也就是progress
         canvas.restoreToCount(layer)
         mPaint.xfermode = null
 
@@ -208,12 +236,16 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
 
 //        canvas!!.save()
 //        canvas.translate(paddingLeft.toFloat(), paddingTop.toFloat())
-        mPaint.style = Paint.Style.STROKE
+        if (showBorder) {
+            mPaint.style = Paint.Style.STROKE
+        } else {
+            mPaint.style = Paint.Style.FILL_AND_STROKE
+
+        }
         mPaint.strokeWidth = mBorderWidth
         mPaint.color = color
 
         val rectf = RectF(mBorderWidth,mBorderWidth,mValidWidth.toFloat()-mBorderWidth,mValidHeight.toFloat()-mBorderWidth)
-
         canvas!!.drawRoundRect(rectf,mBorderRadius,mBorderRadius,mPaint)
 
 //        canvas.restore()
@@ -225,7 +257,7 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
      */
     private fun drawProgressText(canvas: Canvas?,text:String) {
 
-        textPaint.color = mProgressBarColor
+        textPaint.color = if (showBorder) mTextColor else Color.WHITE
 
         val progressText = if (showPercent && TextUtils.isEmpty(text)) getPercent() else text
         val textWidth = textPaint.measureText(progressText)
@@ -238,9 +270,9 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     /**
      * 绘制变色文本
      */
-    private fun drawGradientText(canvas: Canvas){
+    private fun drawGradientText(canvas: Canvas,text:String){
         textPaint.color = Color.WHITE
-        val progressText = if (showPercent) getPercent() else "暂停"
+        val progressText = if (showPercent && TextUtils.isEmpty(text)) getPercent() else text
         val textWidth = textPaint.measureText(progressText)
         val textHeight = textPaint.descent() + textPaint.ascent()
         val xCoordinate = (measuredWidth - textWidth) / 2
@@ -262,15 +294,13 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     /**
      * 获取当前进度百分比
      */
-    private fun getPercent():String{
-        return TextUtils.concat(calculatePercent().toString(),"%").toString()
-    }
+    private fun getPercent() = TextUtils.concat(calculatePercent().toString(),"%").toString()
+
     /**
      * 计算进度百分比
      */
-    private fun calculatePercent():Int{
-        return (100 * (progress * 1.0f / max)).toInt()
-    }
+    private fun calculatePercent() =  (100 * (progress * 1.0f / max)).toInt()
+
 
     private var mXfermode =  PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
 
@@ -286,7 +316,6 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     }
 
 
-
      private lateinit var mStateChangeListener : StateChangeListener
 
      fun setStateChangeListener(mStateChangeListener:StateChangeListener){
@@ -296,15 +325,15 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
 
      interface StateChangeListener  {
 
-          fun onPauseTask()        //暂停下载
+          fun onTaskPause()        //暂停下载
 
-          fun onFinishTask()       //下载完成
+          fun onTaskFinish()       //下载完成
 
-          fun onLoadingTask()      //开始下载
+          fun onTaskLoading()      //开始下载
 
-          fun onOpenGame()         //启动游戏
+          fun onLaunchApp()        //启动应用
 
-          fun onError()            //下载出错
+          fun onTaskError()        //下载出错
      }
 
 

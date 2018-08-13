@@ -13,8 +13,10 @@
         <attr name="progress_textSize" format="dimension"/>
         <attr name="border_radius" format="dimension"/>
         <attr name="border_width" format="dimension"/>
+        <attr name="text_color" format="reference|color"/>
         <attr name="border_color" format="color"/>
         <attr name="percent_show" format="boolean"/>
+        <attr name="border_show" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="FlikerProgressBar">

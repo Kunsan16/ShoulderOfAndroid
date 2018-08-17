@@ -130,19 +130,19 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
             if (progress == 0 && mCurrentState == STATE_PROGRESS_DEFAULT) {
                 //默认状态到开始下载
                 mCurrentState = STATE_PROGRESS_DOWNLOADING
-                mStateChangeListener.onTaskLoading()
+                mStateChangeListener!!.onTaskLoading()
             }else if (progress in 0..max && mCurrentState == STATE_PROGRESS_DOWNLOADING){
                 //暂停
                 mCurrentState = STATE_PROGRESS_PAUSE
-                mStateChangeListener.onTaskPause()
+                mStateChangeListener!!.onTaskPause()
             }else if (progress in 0..max && mCurrentState == STATE_PROGRESS_PAUSE){
                 //继续下载
                 mCurrentState = STATE_PROGRESS_DOWNLOADING
-                mStateChangeListener.onTaskLoading()
+                mStateChangeListener!!.onTaskLoading()
             }else if (progress == max && mCurrentState == STATE_PROGRESS_FINISH){
                 //下载完成
                 mCurrentState = STATE_PROGRESS_FINISH
-                mStateChangeListener.onTaskFinish()
+                mStateChangeListener!!.onTaskFinish()
             }
     }
 
@@ -170,7 +170,7 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
      * 下载中的进度显示
      */
     private fun drawDownLoadingProgress(canvas: Canvas) {
-        showBorder = true
+        showBorder = true   //走进度时默认显示边框
         drawRectFBackground(canvas, mBorderColor)
         drawProgress(canvas,mProgressColor)
         drawProgressText(canvas,if (showPercent)"" else "暂停")
@@ -316,7 +316,7 @@ class DownLoadButton: ProgressBar,View.OnClickListener {
     }
 
 
-     private lateinit var mStateChangeListener : StateChangeListener
+     private  var mStateChangeListener : StateChangeListener? = null
 
      fun setStateChangeListener(mStateChangeListener:StateChangeListener){
 

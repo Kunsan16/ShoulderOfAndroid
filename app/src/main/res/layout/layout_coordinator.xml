@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingStart="@dimen/dp_10"
+    android:paddingEnd="@dimen/dp_10"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -15,7 +17,7 @@
         android:layout_marginTop="@dimen/dp_10"
         app:border_width="2dp"
         app:border_color="@color/colorAccent"
-        app:loading_progress_color="@color/colorPrimary"
+        app:loading_progress_color="@color/colorAccent"
         app:percent_show="false"
         app:border_radius="16dp"
         app:install_color="@color/green"
@@ -52,6 +54,8 @@
         app:text_color="@color/yellow"
         />
 
+
+
     <com.example.administrator.glidetest.view.DownLoadButton
         android:id="@+id/btn_download4"
         android:layout_width="240dp"
@@ -66,4 +70,9 @@
         app:progress_textSize="18sp"
         app:text_color="@color/green"
         />
+    
+
+
+
+
 </LinearLayout>

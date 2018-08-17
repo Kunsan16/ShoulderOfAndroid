@@ -31,12 +31,13 @@ class UIActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_coordinator)
-
-        registerButton(btn_download1)
-        registerButton(btn_download2)
-        registerButton(btn_download3)
-        registerButton(btn_download4)
+       // setContentView(R.layout.layout_coordinator)
+        setContentView(R.layout.layout_coupon)
+       // setContentView(R.layout.layout_recommend)
+//        registerButton(btn_download1)
+//        registerButton(btn_download2)
+//        registerButton(btn_download3)
+//        registerButton(btn_download4)
     }
 
 
@@ -59,7 +60,9 @@ class UIActivity : AppCompatActivity(){
 
             override fun onTaskLoading() {
                 dispose= downloadTest(btn_download)
-                map[btn_download] = dispose   //将四个按钮各自的dispose存起来
+                dispose?.let {
+                    map[btn_download] = it   //将四个按钮各自的dispose存起来
+                }
             }
 
             override fun onLaunchApp() {
@@ -77,7 +80,7 @@ class UIActivity : AppCompatActivity(){
         })
     }
 
-    lateinit var  dispose:Disposable
+     var  dispose:Disposable? = null
 
 
     private fun downloadTest(btn_download: DownLoadButton) :Disposable{
@@ -134,6 +137,9 @@ class UIActivity : AppCompatActivity(){
 
     override fun onDestroy() {
         super.onDestroy()
-        dispose.dispose()
+        if (dispose!=null){
+            dispose!!.dispose()
+        }
+
     }
 }

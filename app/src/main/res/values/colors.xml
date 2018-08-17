@@ -8,5 +8,9 @@
     <color name="white">#ffffff</color>
     <color name="yellow">#fadd1e</color>
     <color name="green">#53c930</color>
+    <color name="orange">#f28723</color>
+    <color name="trans">#00ffffff</color>
+    <color name="black">#121311</color>
+    <color name="gray">#cccaca</color>
 
 </resources>

@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PointF
 import android.util.AttributeSet
@@ -30,7 +31,11 @@ class SwipeView : ViewGroup{
     private var mRightMenuWidths: Int = 0
 
     //存储的是当前正在展开的View
-    private var mViewCache: SwipeView? = null
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        private var mViewCache: SwipeView? = null
+    }
+
 
     constructor(context: Context) : this(context, null)
 
@@ -149,9 +154,6 @@ class SwipeView : ViewGroup{
     private fun smoothClose() {
         LogUtils.i("侧滑删除 smoothClose ")
 
-
-
-
         mViewCache = null
         cancelAnim()
         mCloseAnim = ValueAnimator.ofInt(scrollX,0)
@@ -202,8 +204,6 @@ class SwipeView : ViewGroup{
           mVelocityTracker = mVelocityTracker ?: VelocityTracker.obtain()
           mVelocityTracker?.addMovement(ev)
     }
-
-
 
 
 }
